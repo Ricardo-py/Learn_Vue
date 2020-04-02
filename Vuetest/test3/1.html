@@ -1,0 +1,39 @@
+<!-- class与style的动态绑定 -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../vue.js"></script>
+		<style>
+			.active{
+				background-color: red;
+			}
+			.test{
+				font-size:50px;
+			}
+			.green{
+				color: green;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='app1'>
+			<div 
+			class='test'
+			v-bind:class="{active:isActive}"
+			style="width: 200px; height: 200px; text-align: center; line-height: 200px;">
+				hi vue
+			</div>
+		</div>
+		<script>
+			var app1 = new Vue({
+				el: '#app1',
+				data:{
+					isActive: true,
+					isgreen:true
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src='../vue.js'></script>
+	</head>
+	<body>
+		<div id='app1'>
+			<template v-if="awesome">
+				<h1>Vue is awesome!</h1>
+				<h2>lalal</h2>
+				<h3>lalal3</h3>
+			</template>
+			<template v-else>
+				<h1>Oh no</h1>	
+			</template>			
+			<button v-on:click="dianji">点击切换</button>
+		</div>
+		
+		
+		<script>
+			var app1 = new Vue({
+				el:'#app1',
+				data: {
+					awesome:true
+				},
+				methods:{
+					dianji:function(event){
+						this.awesome=!this.awesome;
+					}
+				}
+			})
+			
+		</script>
+	</body>
+</html>

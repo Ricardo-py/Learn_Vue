@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src='vue.js'></script>
+		<style>
+			{
+				
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div id='app'>
+			<p :style='object_style'>你好</p>
+			<my_component @enlarge-text='handle'></my_component>
+		</div>
+		
+		<script type='text/javascript'>
+			Vue.component('my_component',{
+				template:`<button @click='$emit("enlarge-text")'>扩大组建中字体的大小</button>`,
+				})
+			new Vue({
+				el: '#app',
+				data: {
+					object_style:{
+						fontSize: 20,
+						color:'red'
+					}
+				},
+				methods:{
+					handle: function(){
+						console.log('执行');
+						this.object_style.color = 'green';
+					}
+				}
+			})
+
+		</script>
+	</body>
+</html>

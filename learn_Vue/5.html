@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			.b{
+				position:relative;
+				width:400px;
+				margin:0 auto;
+				text-align:center;
+			}
+			th{
+				text-align: center;
+				width:400px;
+			}
+			td{
+				width:200px;
+			}
+		</style>
+		<script src='vue.js'></script>
+	</head>
+	<body>
+		<div id='app'>
+			<div class='b'>
+				<h3>图书管理</h3>
+				<div>
+					id<input v-model='id' type='text'>
+					书名<input v-model='name' type='text'>
+					<button @click='add_book'>提交</button>
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>书名</th>
+							<th>时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<div>
+						<tr :key='book.id' v-for='book in books'>
+							<td>{{book.id}}</td>
+							<td>{{book.name}}</td>
+							<td>{{book.date}}</td>
+							<td><a href='#' @click.prevent>修改</a>|<a href='#' @click.prevent='delete_book(book.id)'>删除</a></td>
+						</tr>
+					</div>
+				</table>
+			</div>
+		</div>
+		
+		<script>
+			new Vue({
+				el: '#app',
+				data:{
+					books: [],
+					id: '',
+					name: ''
+				},
+				methods:{
+					delete_book:function(id){
+						this.books = this.books.filter(function(book){
+							return book.id != id;
+						})
+					},
+					add_book: function(){
+						var book = {};
+						book.id = this.id;
+						book.name = this.name;
+						book.date = new Date();
+						this.books.push(book);
+						this.id='';
+						this.name='';
+					}
+				},
+				mounted: function(){
+					var data=[
+					{id:1,
+					 name:'红楼梦',
+					 date: new Date()
+					 }
+					];
+					this.books=data;
+				}
+			})
+			
+			
+		</script>
+	</body>
+</html>

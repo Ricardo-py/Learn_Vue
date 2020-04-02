@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../vue.js"></script>
+	</head>
+	<body>
+		<div id='app6'>
+			<p>{{ message }}</p>
+			<button v-on:click="reverseMessage">改变消息</button>
+		</div>
+		<script>
+			var app6 = new Vue({
+				el: '#app6',
+				data: {
+					message: 'hello-world'
+				},
+				
+				methods:{
+					reverseMessage: function(){
+						this.message='你好呀，我变了'
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

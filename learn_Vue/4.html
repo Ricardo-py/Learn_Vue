@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src='vue.js'></script>
+	</head>
+	<body>
+		<div id='app'>
+			<my_com 
+			v-for='item in msgs' 
+			v-bind:data='item'></my_com>
+		</div>
+		<script>
+			Vue.component('my_com',{
+				props: ['data'],
+				data: function(){
+					return{
+						msg:'子组件本身的数据'
+					}
+				},
+				template: 
+				'<div>{{msg}} + {{data.ptitle}}:{{data.pcontent}}</div>'
+			}),
+			
+			new Vue({
+				el:'#app',
+				data:{
+					msgs:[
+						{ptitle: '父组件的title1',
+						pcontent: '父组件的内容1'},
+						{ptitle: '父组件的title1',
+						pcontent: '父组件的内容'}
+					]
+				}
+			})
+		</script>
+	</body>
+</html>

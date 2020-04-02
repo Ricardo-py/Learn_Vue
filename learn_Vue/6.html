@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src='vue.js'></script>
+		<style>
+			.color{
+				color:red;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div id='app'>
+			<input v-model='english' type="text">英语得分{{english}}<br>
+			<input v-model='math' type='text'>数学得分{{math}}<br>
+			<input v-model='history' type='text'>历史得分{{history}}<br>
+			<p class='color'>总得分{{total}}</p>
+		</div>
+		<script type='text/javascript'>
+			new Vue({
+				el: '#app',
+				data:{
+					english:'',
+					math: 80,
+					history: 90
+				},
+				computed:{
+					total:function(){
+						var t;
+						t = parseInt(this.english) + parseInt(this.math) + parseInt(this.history);
+						return t;
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

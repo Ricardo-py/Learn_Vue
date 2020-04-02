@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src='../vue.js'></script>
+	</head>
+	
+	<style>
+		.container{
+			
+		}
+		.container .cart{
+			width:400px;
+			margin:0 auto;
+		}
+		.container .title{
+			height:40px;
+			line-height: 40px;
+			text-align:center;
+			background-color: #ADD8E6;
+		}
+		.container .cart_body{
+
+			line-height: 40px;
+		}
+		.container .cart_body .img{
+			width: 50px;
+			height:40px;
+			margin:5px;
+		}
+		.container .cart_body .img img{
+			width:100%;
+			height: 100%;
+		}
+		.container .cart_body .cart_item{
+			display: flex;
+		}
+		.container .cart_body a{
+			font-size:30px;
+			width:30px;
+			text-decoration:none;
+			display: inline-block;
+			background-color: lightgray;
+			vertical-align: middle;
+			text-align: center;
+			cursor:pointer
+		}
+		.container .cart_body .midden{
+			align-self:center;
+		}
+		.container .cart_body .right{
+			align-self: flex-end;
+		}
+		.container .total_end{
+			display: flex;
+			justify-content: space-between;
+		}
+		.container .total_end .calc{
+			
+			justify-content: flex-end;
+			align-items:flex-end;
+		}
+	</style>
+	
+	<body>
+		
+		<div id='app'>
+			<div class='container'>
+				<my_cart></my_cart>
+			</div>
+		</div>
+		
+		<script type='text/javascript'>
+			
+			var cart_title={
+				props:['uname'],
+				template:`<div class='title'>{{uname}}的商品</div>`
+			};
+			
+			var cart_body = {
+				props:['items'],
+				template:`
+				<div class='cart_body'>
+					<div v-for='item in items' class='cart_item'>
+						<div class='img'>
+							<img :src='item.img'/>
+						</div>
+						<span>{{item.name}}</span>
+						
+						<div class='midden'>				
+							<a @click.prevent='sub(item.id)'>-</a>
+							<input type='text' :value='item.num' @blur='changeNum(item.id, $event)'>
+							<a @click.prevent='add(item.id)'>+</a>
+						</div>
+						<div class='right'>
+							<span @click='del(item.id)'>×</span>
+						</div>
+					</div>
+				</div>
+				`,
+				methods:{
+					changeNum:function(id,event){
+						this.$emit('change-num',{
+							id: id,
+							type: 'change',
+							num: event.target.value
+						});
+					},
+					sub:function(id){
+						this.$emit('change-num',{
+							id: id,
+							type: 'sub'
+						});
+					},
+					add:function(id){
+						this.$emit('change-num',{
+							id: id,
+							type: 'add'
+						})
+					},
+					del: function(id){
+						this.$emit('del_item',{
+							id: id,
+							type: 'del'
+						})
+					}
+				}
+			}
+			
+			var cart_end = {
+				props:['total'],
+				template:`
+				<div class='total_end'>
+					<div></div>
+					<div class='total'>
+						总价{{total}}
+					</div>
+					<div class='calc'>
+						<button>结算</button>
+					</div>
+				</div>
+				`
+			}
+			
+			Vue.component('my_cart',{
+				 data: function() {
+				  return {
+				    uname: '张三',
+				    list: [{
+				      id: 1,
+				      name: 'TCL彩电',
+				      price: 1000,
+				      num: 1,
+				      img: 'img/a.jpg'
+				    },{
+				      id: 2,
+				      name: '机顶盒',
+				      price: 1000,
+				      num: 1,
+				      img: 'img/b.jpg'
+				    },{
+				      id: 3,
+				      name: '海尔冰箱',
+				      price: 1000,
+				      num: 1,
+				      img: 'img/c.jpg'
+				    },{
+				      id: 4,
+				      name: '小米手机',
+				      price: 1000,
+				      num: 1,
+				      img: 'img/d.jpg'
+				    },{
+				      id: 5,
+				      name: 'PPTV电视',
+				      price: 1000,
+				      num: 2,
+				      img: 'img/e.jpg'
+				    }]
+				  }
+				},
+				template:`
+				<div class='cart'>
+					<cart_title uname='张三'></cart_title>
+					<cart_body :items='list' @change-num='changed_occur($event)' @del-item='del_item($event)'></cart_body>
+					<cart_end :total='total'></cart_end>
+				</div>
+				`,
+				components:{
+					'cart_title':cart_title,
+					'cart_body':cart_body,
+					'cart_end':cart_end
+				},
+				methods:{
+					changed_occur:function(val){
+						if (val.type=='change'){
+							this.list.some(item=>{
+								if(item.id == val.id){
+									item.num = val.num;
+									return true;
+								}
+							});
+						}else if(val.type =='sub'){
+							this.list.some(item=>{
+								if (item.id == val.id){
+									if (item.num != 0)
+										item.num --;
+									return true;
+								}
+							});
+						}else if(val.type == 'add'){
+							this.list.some(item=>{
+								if(item.id == val.id){
+									item.num ++;
+									return true;
+								}
+							});
+						}
+					}
+				},
+				computed:{
+					total: function(){
+						var val = 0;
+						this.list.forEach(item=>{
+							val += item.price * item.num;
+						});
+						return val;
+					}
+				}
+			})
+			new Vue({
+				el: '#app',
+				data:{
+					
+				}
+			})
+		</script>
+	</body>
+</html>

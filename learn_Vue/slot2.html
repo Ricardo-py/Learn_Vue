@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src='vue.js'></script>
+		<style>
+			.red > * {
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div id='app'>
+			<my_com>
+				<p slot='header'>标题信息</p>
+				<p>主要内容1</p>
+				<p>主要内容2</p>
+				<p slot='footer'>底部信息</p>
+			</my_com>
+		</div>
+		<script type='text/javascript'>
+			Vue.component('my_com',{
+				data:function(){
+					return{
+						activeColor:'red'
+					}
+				},
+				template:
+				
+				'<div><div v-bind:style={color:activeColor}>你好呀</div>\
+				<div v-bind:style={color:activeColor}>\
+					<slot name="header">1</slot>\
+					<slot>2</slot>\
+					<slot name="footer">3</slot>\
+				</div></div>'
+			})
+			new Vue({
+				el: '#app',
+				data: {
+					msg:'0'
+				}
+			})
+		</script>
+	</body>
+</html>

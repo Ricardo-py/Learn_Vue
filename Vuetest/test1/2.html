@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	<script src="../vue.js" type="text/javascript"></script>
+
+	</head>
+	<body>
+		
+		<div id='app-2'>
+			<span v-bind:title="message">
+				鼠标悬停
+			</span>
+			<span> {{message}}</span>
+		</div>
+		
+		<script>
+			var app2 = new Vue({
+			  el: '#app-2',
+			  data: {
+				message: '页面加载于 ' + new Date().toLocaleString()
+			  }
+			});
+			app2.$data.message = '2';
+		</script>
+
+	</body>
+</html>
